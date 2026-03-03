@@ -6,17 +6,31 @@ async function fetchAllButterflyObservations() {
   let all = [];
   let done = false;
 
-  while (!done) {
-    const url = `https://api.inaturalist.org/v1/observations?taxon_id=47157&place_id=47&per_page=200&page=${page}&order=asc&order_by=observed_on`;
-    const r = await fetch(url);
-    const data = await r.json();
+ while (!done) {
+  const url = `https://api.inaturalist.org/v1/observations?taxon_id=47157&place_id=47&per_page=200&page=${page}&order=asc&order_by=observed_on`;
+  const r = await fetch(url);
 
-    all = all.concat(data.results);
-    if (data.results.length < 200) done = true;
-    page++;
+  if (!r.ok) {
+    console.warn("Stopping pagination due to HTTP error:", r.status);
+    break;
   }
 
-  return all;
+  const data = await r.json();
+
+  if (!data.results || data.results.length === 0) {
+    done = true;
+    break;
+  }
+
+  all = all.concat(data.results);
+
+  page++;
+
+  // safety limit so we never hit page 51 again
+  if (page > 20) {
+    console.warn("Stopping pagination at page limit");
+    break;
+  }
 }
 
 function dayOfYear(date) {
