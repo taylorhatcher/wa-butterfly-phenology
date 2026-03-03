@@ -1,0 +1,40 @@
+body {
+  font-family: sans-serif;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+th {
+  background: #f0f4ff;
+}
+
+.early {
+  color: #007700;
+  font-weight: bold;
+}
+
+.late {
+  color: #aa0000;
+  font-weight: bold;
+}
+
+.normal {
+  color: #555;
+}
